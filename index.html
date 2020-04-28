@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <title>race</title>
+</head>
+
+<body style="height: 600px;width: 1200px;">
+
+  <div id="fl-layout-wrapper"></div>
+  <script src="./template.js"></script>
+  <script src="./data.js"></script>
+  <script>
+    var option = {
+      height_mode: "fixed",
+      margin_right: 1,
+      margin_right_mobile: .5,
+      margin_bottom: 0,
+      margin_left: 1,
+      zoom_enabled: !0,
+      zoom_steps_to_show: 10,
+      zoom_y_axis: !1,
+      zoom_y_padding: 20,
+      color: {},
+      start_circle_r: .3,
+      end_circle_r: 0.6,
+      end_circle_stroke: .3,
+      end_circle_stroke_bg: !0,
+      circle_space_between: 2,
+      horse_images: !1,
+      hide_labels: !1,
+      label_font_size: 1,
+      label_color_mode: "auto",
+      label_color: "#808080",
+      animate_scores: !0,
+      rank_font_size: 1,
+      rank_outside_picture: !0,
+      line_opacity: 1,
+      line_width: .3,
+      curve: "curveLinear",
+      shade: !0,
+      shade_opacity: .3,
+      shade_width: 1,
+      missing: !1,
+      missing_opacity: 1,
+      missing_stroke_dash: .2,
+      missing_width: 1.5,
+      stage_duration: 300,
+      update_duration: 500,
+      label_ranks: "排名",
+      label_scores: "趋势",
+      label_replay: "重新播放",
+      value_type: "scores",
+      higher_scores_win: !0,
+      ties_mode: "competition",
+      show_buttons: !0,
+      show_replay: !0,
+      target_position: null,
+      selected_horse: null,
+      mouseover_horse: null,
+      y_axis_min: null,
+      y_axis_max: null,
+      y_axis_min_rank: null,
+      y_axis_max_rank: null,
+      y_axis_label_colors: "#808080",
+      y_axis_label_size: 0.75,
+      y_axis_stroke_color: "#808080",
+      y_axis_stroke_dash: null,
+      y_axis_format: {
+        suffix: "万",
+        multiply_divide_constant: 10000,
+        n_dec: 0,
+        strip_separator: !0,
+        strip_zeros: !0,
+        transform: "divide",
+        transform_labels: !0
+      },
+      header_title: "",
+      header_subtitle: "",
+      header_color: "#333333",
+      header_margin: "10",
+      header_align: "left",
+      filter_control_type: "auto-buttons",
+      filter_width: 300,
+      filter_include_all: !0,
+      filter_all_label: "All",
+      filter: null,
+      controls_border_radius: 3,
+      localization: {},
+      label_format: {
+        n_dec: 0
+      },
+      layout: {
+        background_color: "#FFF"
+      },
+      x_axis_label_color: "#808080",
+      x_axis_label_size: 1,
+      x_axis_rotate: "0",
+      x_axis_show_hidden: !0
+    }
+
+    window.template = LineRace(option, {})
+
+    window.onload = function () {
+      start({
+        data: {
+          type: "sendData",
+          params: sourceData
+        }
+      })
+    }
+
+    var loaded = false
+
+    window.addEventListener('message', start, false);
+
+    function start(evt) {
+      if (evt.data.type === "sendData") {
+        if (loaded) return
+        loaded = true
+        var wantGetTop = 10
+        var data = evt.data.params
+        var dateStages = []
+        var Top20 = data.slice(-1)[0].data.slice(0, wantGetTop)
+        var maxLength = data.length
+        var setMap = {}
+        for (let i = 0; i < Top20.length; i++) {
+          setMap[Top20[i].country] = []
+        }
+        for (let i = 0; i < data.length; i++) {
+          dateStages.push(data[i].date.substring(5))
+          var temp = 0
+          for (let j = 0; j < data[i].data.length; j++) {
+            if (setMap[data[i].data[j].country]) {
+              temp++
+              setMap[data[i].data[j].country].push(data[i].data[j].confirmed)
+            }
+            if (temp === wantGetTop) break
+          }
+        }
+        var horserace = []
+        for (var key in setMap) {
+          if (setMap[key].length < maxLength) {
+            var fixed = maxLength - setMap[key].length
+            for (var i = fixed; i > 0; i--) {
+              setMap[key].unshift(0)
+            }
+          }
+          horserace.push({
+            name: key,
+            stages: setMap[key]
+          })
+        }
+        window.template.data.horserace = horserace
+        window.template.data.horserace.column_names = {
+          "name": "name",
+          "pic": "pic",
+          "stages": dateStages
+        }
+        window.template.draw();
+      }
+    }
+
+    /* var names = {
+        "horserace": {
+          "name": "name",
+          "pic": "pic",
+          "stages": ["02-10", "02-10", "02-10", "02-10", "02-10", "02-10", "02-10",
+            "02-10", "02-10", "02-10"
+          ]
+        }
+      },
+      data = {
+        "horserace": [{
+          "name": "美国",
+          // "pic": "https://www.countryflags.io/us/shiny/64.png",
+          "stages": ["41.5", "35.5", "36", "34", "34", "36", "37", "40", "39.5", "38.5"]
+        }]
+      };
+    for (var key in data) {
+      window.template.data[key] = data[key];
+      window.template.data[key].column_names = names[key];
+    } */
+    // window.template.draw();
+  </script>
+
+</body>
+
+</html>

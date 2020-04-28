@@ -1,0 +1,175 @@
+body,
+html {
+  height: 100%;
+  overflow: hidden
+}
+
+body {
+  margin: 0;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased
+}
+
+* {
+  box-sizing: border-box
+}
+
+svg {
+  display: block
+}
+
+#viz-ui {
+  position: relative;
+  width: 100%;
+  line-height: 28px
+}
+
+#viz-ui button {
+  background: 0 0;
+  color: #333;
+  border-radius: 0;
+  border: none;
+  outline: 0;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  height: 24px;
+  line-height: 24px;
+  font-weight: 700;
+  padding-bottom: 0;
+  margin: 0;
+  background: #fff
+}
+
+#viz-ui button:hover {
+  background: #eee
+}
+
+#viz-ui button.selected {
+  background: #2886b2;
+  color: #fff
+}
+
+#viz-ui #horse-controls {
+  display: inline-block
+}
+
+#viz-ui #replay {
+  border: 1px solid rgba(0, 0, 0, .1);
+  background: 0 0;
+  display: inline-block;
+  vertical-align: top;
+  height: 26px;
+  margin-right: 8px;
+  background: #fff
+}
+
+#viz-ui #replay:hover {
+  background: #eee
+}
+
+#viz-ui #replay:before {
+  content: '';
+  display: inline-block;
+  background: url("./replay_icon.svg");
+  width: 10px;
+  height: 22px;
+  margin: 0 3px 0 0;
+  line-height: 24px;
+  background-size: 100% auto;
+  background-position: center center;
+  background-repeat: no-repeat;
+  vertical-align: top
+}
+
+#viz-ui #rank-toggle {
+  margin-right: 8px;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 22px;
+  border: 1px solid rgba(0, 0, 0, .1)
+}
+
+#viz-ui #filter-control {
+  width: 300px;
+  min-width: 50px;
+  line-height: 22px;
+  vertical-align: top
+}
+
+#viz-ui #filter-control .dropdown,
+#viz-ui #filter-control .dropdown .main {
+  margin-bottom: 0;
+  max-width: 300px !important
+}
+
+#viz-ui #filter-control .dropdown .main {
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, .1);
+  font-weight: 700;
+  color: #000
+}
+
+#viz-ui #filter-control .dropdown .main * {
+  line-height: 22px !important;
+  font-size: 12px !important
+}
+
+#viz-ui #filter-control .button {
+  font-size: 12px;
+  height: 21px;
+  line-height: 21px;
+  font-weight: 700;
+  padding-bottom: 0;
+  padding-top: 1px;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-right: none
+}
+
+#viz-ui #filter-control .button:last-child {
+  border-right: 1px solid rgba(0, 0, 0, .1)
+}
+
+#viz-ui #filter-control .button.selected,
+#viz-ui #filter-control .button.selected:hover {
+  background: #2886b2;
+  color: #fff
+}
+
+#viz-ui #filter-control .button-container {
+  border: 0;
+  line-height: 22px
+}
+
+.x.axis line,
+.x.axis path {
+  display: none
+}
+
+.x.axis text,
+.y.axis text {
+  font-size: 11px
+}
+
+.check circle,
+.check line,
+.end.circle,
+.horse,
+.name-bg,
+.name-fg,
+.rank-number,
+image {
+  transition: 50ms opacity linear
+}
+
+.rank-number {
+  font-weight: 700
+}
+
+.tick line {
+  opacity: 1
+}
+
+/*# sourceMappingURL=style.css.map */
